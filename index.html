@@ -1061,6 +1061,50 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+
+        /* EF Use Case Lab mini-grid */
+        .cards-grid.ef-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 0; }
+        .ef-grid .card { padding: 16px; }
+        .ef-grid .card-icon { width: 40px; height: 40px; font-size: 1.1rem; margin-bottom: 10px; }
+        .ef-grid .card h3 { font-size: 0.95rem; }
+        .ef-grid .card p { font-size: 0.82rem; }
+        @media (max-width: 768px) { .cards-grid.ef-grid { grid-template-columns: 1fr 1fr; } }
+
+        /* Deliberation flow diagram */
+        .delib-flow { display: flex; align-items: stretch; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+        .delib-step { flex: 1; min-width: 150px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 16px 14px; text-align: center; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .delib-icon { font-size: 1.6rem; }
+        .delib-label { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+        .delib-arrow { align-self: center; color: var(--accent-purple); font-size: 1.3rem; font-weight: 700; }
+        @media (max-width: 768px) { .delib-arrow { transform: rotate(90deg); } }
+
+        /* Reality-check callout */
+        .reality-callout { background: var(--accent-amber-bg); border-left: 3px solid var(--accent-amber); border-radius: 0 12px 12px 0; padding: 16px 20px; margin-top: 8px; }
+        .reality-callout h4 { color: #e65100; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; }
+        .reality-callout p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* Clickable program summary cards */
+        .program-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 6px; }
+        .program-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 16px; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; box-shadow: var(--shadow-soft); }
+        .program-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); border-color: var(--accent-green-light); }
+        .pc-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .program-card h4 { font-size: 0.98rem; color: var(--text-primary); margin-bottom: 6px; }
+        .program-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
+        .pc-status { font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 8px; border-radius: 100px; white-space: nowrap; }
+        .pc-status.cancelled { background: var(--accent-coral-bg); color: var(--accent-coral); }
+        .pc-status.active { background: var(--accent-green-bg); color: var(--accent-green); }
+        .pc-status.unverified { background: var(--bg-secondary); color: var(--text-muted); }
+        .pc-cta { display: inline-block; margin-top: 10px; font-size: 0.75rem; font-weight: 600; color: var(--accent-green); font-family: 'Space Grotesk', sans-serif; }
+
+        /* Program detail modal */
+        .program-overlay { position: fixed; inset: 0; background: rgba(20,20,20,0.55); backdrop-filter: blur(3px); display: none; align-items: flex-start; justify-content: center; z-index: 300; padding: 40px 20px; overflow-y: auto; }
+        .program-overlay.open { display: flex; }
+        .program-detail { display: none; position: relative; width: 100%; max-width: 900px; background: var(--bg-primary); border-radius: 18px; padding: 40px 44px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); margin: auto; }
+        .program-detail.active { display: block; }
+        .program-detail h2 { margin: 6px 0 4px; }
+        .modal-close { position: absolute; top: 16px; right: 18px; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border-light); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all .2s ease; z-index: 2; }
+        .modal-close:hover { background: var(--accent-coral); border-color: var(--accent-coral); color: #fff; }
+        @media (max-width: 768px) { .program-detail { padding: 28px 20px; } }
     </style>
 </head>
 <body>
@@ -1078,7 +1122,7 @@
                 <img src="https://decentralpark.nyc/images/decentralpark-logo.png" alt="Decentral Park NYC" class="title-logo">
                 <p class="tagline">Imagining a post-capitalist world in the heart of NYC</p>
                 <h1>NYC Crypto Policy Transition<br><span>Recommendations</span></h1>
-                <p class="subtitle">A Progressive Framework for Digital Financial Infrastructure & Community Governance<br>For the Mamdani Administration</p>
+                <p class="subtitle">A Progressive Framework for Digital Financial Infrastructure &amp; Community Governance</p>
             </div>
         </div>
 
@@ -1087,32 +1131,118 @@
             <div class="slide-content">
                 <span class="section-label">Introduction</span>
                 <h2>About Decentral Park NYC</h2>
-                <p class="lead">A collective of crypto-native technologists, researchers, and community organizers exploring how blockchain technology can serve progressive ends—not corporate interests.</p>
+                <p class="lead">A collective of technologists, researchers, and community organizers united by a single question: does a given technology <strong>liberate communities or entrench power over them?</strong> We are technology generalists—rooted in crypto, shaped by its hard lessons, but loyal to outcomes, not tools.</p>
 
                 <div class="two-col">
                     <div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 14px; font-size: 1.1rem;">Who We Are</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">Our members include industry professionals, academics, developers, and community organizers with experience in blockchain technology—all united by the belief that crypto should serve communities, not just investors. We've seen blockchain used for speculation and extraction. We want to reclaim it for democratic participation, privacy preservation, and building alternatives to extractive financial systems.</p>
+                        <h3 style="color: var(--accent-green); margin-bottom: 14px; font-size: 1.1rem;">Our Lens: Liberatory vs. Extractive Tech</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">Every technology can concentrate power or distribute it. Crypto is our worked example: we have watched the same primitives drive speculation and extraction—and also permissionless access, censorship resistance, and genuine community ownership. We bring that scar tissue to every tool we evaluate, from payment rails and identity to AI and community networks.</p>
                     </div>
                     <div>
-                        <h3 style="color: var(--accent-purple); margin-bottom: 14px; font-size: 1.1rem;">Our Approach</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">Crypto has well-documented problems that this document does not attempt to address. Instead, we focus on a specific question: what would crypto policy look like if designed for public benefit rather than industry promotion? We critique approaches that prioritize corporate interests and propose alternatives grounded in genuine community governance.</p>
+                        <h3 style="color: var(--accent-purple); margin-bottom: 14px; font-size: 1.1rem;">Rooted in Crypto, Not Limited by It</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">Our members built and studied blockchain systems—but the mandate is broader. What would <em>technology</em> policy look like if it were designed for public benefit instead of industry promotion? We carry crypto's lessons about ownership, transparency, and capture into the full stack of municipal technology.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: var(--accent-purple); margin-bottom: 6px; font-size: 1.05rem;">How the Ethereum Foundation Use Case Lab sees municipal integration</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">The EF Use Case Lab's <a href="https://www.usecaselab.org/verifiable-cities" target="_blank" style="color: var(--accent-purple);">Verifiable Cities</a> program argues cities are where verifiable, coordination-first technology matters most—on four axes:</p>
+                    <div class="cards-grid ef-grid">
+                        <div class="card">
+                            <div class="card-icon purple">📍</div>
+                            <h3>Proximity</h3>
+                            <p>Cities are where coordination and service delivery happen in real time, close to the residents affected.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon green">🛠️</div>
+                            <h3>Pragmatism</h3>
+                            <p>Cities face immediate service demands that require practical, not theoretical, solutions.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon blue">🔁</div>
+                            <h3>Replicability</h3>
+                            <p>Thousands of municipalities share common operational needs—what works in one can scale to many.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon amber">⚙️</div>
+                            <h3>Leverage</h3>
+                            <p>Cities are powerful levers for public-sector innovation and for modernizing civic capacity.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== SLIDE 3: Why Crypto? ==================== -->
+        <!-- ==================== SLIDE 3: What This Document Contains (moved up) ==================== -->
         <div class="slide section-slide">
             <div class="slide-content">
-                <span class="section-label purple">The Case for Crypto</span>
-                <h2>Why Blockchain Matters for Democratizing Technology</h2>
-                <p class="lead">Crypto isn't just about investment or speculation. At its core, blockchain technology enables <strong>infrastructure that no single entity controls</strong>—and that's a powerful tool for communities.</p>
+                <span class="section-label">Overview</span>
+                <h2>What This Document Contains</h2>
+                <p class="lead">A policy framework in two parts: first <strong>what NYC should build</strong>, then a clear-eyed review of <strong>what already exists</strong>.</p>
 
-                <div class="recommendation-box" style="margin-top: 20px; margin-bottom: 24px; background: var(--accent-blue-bg); padding: 16px; border-left: 3px solid var(--accent-blue);">
-                    <h4 style="color: var(--accent-blue);">Already Happening in NYC</h4>
-                    <p style="font-size: 0.9rem;">In 2023, <a href="https://www.radicalxchange.org/wiki/nyc-qv/" target="_blank" style="color: var(--accent-blue);">RadicalxChange partnered with Harlem District 9</a> to pilot quadratic voting for participatory budgeting—the first time a US public official used online blockchain-verified voting open to their whole constituency. 80% satisfaction rate.</p>
+                <div class="two-col" style="margin-top: 32px;">
+                    <div class="card" style="border-left: 3px solid var(--accent-green);">
+                        <div class="card-icon green">🌱</div>
+                        <h3>Part I: Community Infrastructure Proposals</h3>
+                        <p>Three proposals for community-governed technology that serves residents, not industry.</p>
+                        <ul style="margin-top: 14px; font-size: 0.85rem; color: var(--text-muted); padding-left: 16px;">
+                            <li>Participatory Budgeting — AI-augmented deliberation</li>
+                            <li>City Currency System</li>
+                            <li>Municipal Mesh WiFi</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 3px solid var(--accent-coral);">
+                        <div class="card-icon coral">🔍</div>
+                        <h3>Part II: Existing Program Review</h3>
+                        <p>A critical look at 9 NYC crypto/blockchain programs—<strong>most already cancelled in January 2026</strong>—with clear recommendations. Explore each in the interactive summary.</p>
+                        <ul style="margin-top: 14px; font-size: 0.85rem; color: var(--text-muted); padding-left: 16px;">
+                            <li>Office of Digital Assets, Advisory Council</li>
+                            <li>Blockchain Center, Node Program, MyCity</li>
+                            <li>Blockchain Week, Crypto Tax, BitBonds, Blockchain Plan</li>
+                        </ul>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 4: Why — Distributed Ledgers (concept) ==================== -->
+        <div class="slide section-slide">
+            <div class="slide-content">
+                <span class="section-label purple">The Big Idea</span>
+                <h2>Distributed Ledgers, Plainly</h2>
+                <p class="lead">Strip away the hype and a blockchain is one thing: a <strong>shared ledger no single company owns</strong>—a public record many parties can write to and verify, with no gatekeeper in the middle. That's not an investment thesis. It's infrastructure.</p>
+
+                <div class="two-col" style="margin-top: 20px;">
+                    <div>
+                        <h3 style="color: var(--accent-blue); margin-bottom: 12px; font-size: 1rem;">The Analogy</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.92rem;">Roads, water mains, and the power grid are public infrastructure. Payment rails and civic record-keeping should be too. Today a handful of corporations own the rails our economy runs on and charge a toll on every transaction. A distributed ledger lets a city <strong>own its own payment rails</strong> instead of renting them from Visa and Mastercard.</p>
+                        <div class="quote-block" style="margin-top: 18px;">
+                            <p>"Crypto is infrastructure, not just investment. Like roads or water systems, payment rails and governance tools should be public goods—not controlled by corporations extracting value from every transaction."</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-green); margin-bottom: 12px; font-size: 1rem;">Why It Matters for a City</h3>
+                        <ul class="bullet-list">
+                            <li><span class="bullet"></span><strong>Ownership:</strong> the city—not Wall Street—controls the rails it depends on</li>
+                            <li><span class="bullet"></span><strong>No gatekeepers:</strong> permissionless access, including for the unbanked</li>
+                            <li><span class="bullet"></span><strong>Verifiability:</strong> public rules and finances anyone can independently audit</li>
+                            <li><span class="bullet"></span><strong>Resilience:</strong> no single point of control or failure</li>
+                        </ul>
+                        <div class="recommendation-box" style="margin-top: 18px; background: var(--accent-blue-bg); border-left: 3px solid var(--accent-blue);">
+                            <h4 style="color: var(--accent-blue);">The Throughline</h4>
+                            <p style="font-size: 0.9rem;">Everything that follows comes back to one move: <strong>owning the city's payment rails and records</strong> rather than renting them from extractive intermediaries.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 5: Why — The Facts (low-level) ==================== -->
+        <div class="slide section-slide">
+            <div class="slide-content">
+                <span class="section-label purple">The Case, In Numbers</span>
+                <h2>Why It Matters for Democratizing Technology</h2>
+                <p class="lead">The case for public rails isn't abstract—it's about who pays the toll and who gets locked out today.</p>
 
                 <div class="two-col">
                     <div>
@@ -1123,746 +1253,136 @@
                             <li><span class="bullet coral"></span><strong>Surveillance:</strong> Every transaction tracked, shared with law enforcement</li>
                             <li><span class="bullet coral"></span><strong>Financial exclusion:</strong> 1.4 billion adults globally unbanked; many more underbanked</li>
                         </ul>
-
-                        <h3 style="color: var(--accent-green); margin-bottom: 14px; margin-top: 20px; font-size: 1rem;">What Blockchain Enables</h3>
-                        <ul class="bullet-list">
-                            <li><span class="bullet"></span><strong>Permissionless access:</strong> No gatekeepers deciding who can participate</li>
-                            <li><span class="bullet"></span><strong>Transparent governance:</strong> Decisions recorded on public ledger</li>
-                            <li><span class="bullet"></span><strong>Privacy options:</strong> Transactions without surveillance</li>
-                            <li><span class="bullet"></span><strong>Censorship resistance:</strong> No single point of control or failure</li>
-                        </ul>
                     </div>
                     <div>
-                        <div class="quote-block" style="margin-top: 0;">
-                            <p>"Crypto is infrastructure, not just investment. Like roads or water systems, payment rails and governance tools should be public goods—not controlled by corporations extracting value from every transaction."</p>
-                        </div>
-
-                        <h3 style="color: var(--accent-purple); margin-bottom: 14px; margin-top: 20px; font-size: 1rem;">A Trust Layer for Government</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.9rem;">Rather than building new centralized platforms, blockchain can embed <strong>transparency and accountability directly into how public rules and finances operate</strong>. This creates "credibility environments" around government claims—without adding new bureaucratic overhead. The goal: extend accountability from administrative processes to <strong>transparent technical mechanisms</strong> that citizens can verify independently.</p>
+                        <h3 style="color: var(--accent-green); margin-bottom: 14px; font-size: 1rem;">What Distributed Ledgers Enable</h3>
+                        <ul class="bullet-list">
+                            <li><span class="bullet"></span><strong>Permissionless access:</strong> No gatekeepers deciding who can participate</li>
+                            <li><span class="bullet"></span><strong>Transparent governance:</strong> Decisions recorded on a public ledger</li>
+                            <li><span class="bullet"></span><strong>Privacy options:</strong> Transactions without blanket surveillance</li>
+                            <li><span class="bullet"></span><strong>Censorship resistance:</strong> No single point of control or failure</li>
+                        </ul>
+                        <h3 style="color: var(--accent-purple); margin-bottom: 10px; margin-top: 18px; font-size: 1rem;">A Trust Layer for Government</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.88rem;">Rather than building new centralized platforms, distributed ledgers can embed <strong>transparency and accountability directly into how public rules and finances operate</strong>—creating "credibility environments" around government claims that citizens can verify independently, without new bureaucratic overhead.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== SLIDE 4: Document Overview ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label">Overview</span>
-                <h2>What This Document Contains</h2>
-                <p class="lead">A comprehensive policy framework organized into two parts: evaluating what exists and proposing what should be built.</p>
-
-                <div class="two-col" style="margin-top: 32px;">
-                    <div class="card" style="border-left: 3px solid var(--accent-coral);">
-                        <div class="card-icon coral">🔍</div>
-                        <h3>Part I: Existing Program Review</h3>
-                        <p>Critical analysis of 9 crypto/blockchain programs with specific recommendations: abolish, reform, or maintain.</p>
-                        <ul style="margin-top: 14px; font-size: 0.85rem; color: var(--text-muted); padding-left: 16px;">
-                            <li>Office of Digital Assets</li>
-                            <li>Crypto Advisory Council</li>
-                            <li>NYC Blockchain Center</li>
-                            <li>NYC Node Program</li>
-                            <li>MyCity Crypto Components</li>
-                            <li>Blockchain Week NYC</li>
-                            <li>Crypto Tax Payments</li>
-                            <li>BitBonds Proposal</li>
-                            <li>NYC Blockchain Plan</li>
-                        </ul>
-                    </div>
-                    <div class="card" style="border-left: 3px solid var(--accent-green);">
-                        <div class="card-icon green">🌱</div>
-                        <h3>Part II: New Proposals</h3>
-                        <p>Two bold proposals for community-governed technology infrastructure that serves residents, not industry.</p>
-                        <ul style="margin-top: 14px; font-size: 0.85rem; color: var(--text-muted); padding-left: 16px;">
-                            <li>Participatory Budgeting</li>
-                            <li>City Currency System</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 4: Key Principles ==================== -->
+        <!-- ==================== SLIDE 6: Core Principles (condensed) ==================== -->
         <div class="slide section-slide">
             <div class="slide-content">
                 <span class="section-label">Guiding Framework</span>
                 <h2>Our Core Principles</h2>
-                <p class="lead">Every recommendation in this document is guided by these questions:</p>
+                <p class="lead">Four questions decide every recommendation in this document:</p>
 
-                <div class="cards-grid" style="margin-top: 24px;">
+                <div class="cards-grid" style="margin-top: 24px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
                     <div class="card">
                         <div class="card-icon green">👥</div>
                         <h3>Who Benefits?</h3>
-                        <p>Residents or industry? Low-income New Yorkers or tech investors? Programs should serve the public.</p>
+                        <p>Residents or industry? Low-income New Yorkers or tech investors? Public money should serve the public—full stop.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon purple">🎯</div>
-                        <h3>Does It Solve a Real Problem?</h3>
-                        <p>Or is this a solution looking for a problem? Technology for its own sake wastes public resources.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon blue">⚖️</div>
-                        <h3>Would Simpler Tech Work?</h3>
-                        <p>Blockchain is rarely the best tool. Before adding complexity, ask if conventional tech would serve just as well.</p>
+                        <h3>Real Problem, or a Headline?</h3>
+                        <p>Does this solve something residents actually feel—or is it a promotional stunt? And would simpler tech do the job? Blockchain is rarely the best tool.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon amber">🔒</div>
-                        <h3>What Are the Privacy Risks?</h3>
-                        <p>Who has access to data? Can it be shared with police or ICE? Surveillance must be prevented by design.</p>
+                        <h3>Privacy by Design?</h3>
+                        <p>Who can access the data—and can it be handed to police or ICE? Surveillance must be impossible by design, not just by promise.</p>
                     </div>
                     <div class="card">
-                        <div class="card-icon coral">🗳️</div>
-                        <h3>Who Has a Seat at the Table?</h3>
-                        <p>Just industry, or also labor, tenants, consumers? Democratic participation must be structural.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon green">💰</div>
+                        <div class="card-icon coral">💰</div>
                         <h3>What's the Opportunity Cost?</h3>
-                        <p>Could these funds better serve residents another way? Every dollar on industry promotion is a dollar not spent on housing.</p>
+                        <p>Every dollar spent on industry promotion is a dollar not spent on housing. Who has a seat at the table—labor, tenants, consumers, or only industry?</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== PART I DIVIDER ==================== -->
-        <div class="slide part-divider">
-            <div class="slide-content">
-                <div class="part-number">Part I</div>
-                <h2>Existing Program<br>Review</h2>
-                <p class="part-subtitle">Critical analysis of 9 crypto/blockchain initiatives with specific recommendations</p>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 5: Programs Summary ==================== -->
+        <!-- ==================== PART I: COMMUNITY INFRASTRUCTURE PROPOSALS ==================== -->
+        <!-- ==================== SLIDE 7: Proposals Overview ==================== -->
         <div class="slide section-slide">
             <div class="slide-content">
-                <span class="section-label coral">Part I Overview</span>
-                <h2>All Programs At A Glance</h2>
+                <span class="section-label green">Part I</span>
+                <h2>Community Infrastructure Proposals</h2>
+                <p class="lead">Three proposals for community-governed technology infrastructure—built to serve residents, not industry. This is what we recommend NYC <strong>build</strong>.</p>
 
-                <!-- Pie Charts Row -->
-                <div class="pie-charts-row">
-                    <div class="pie-chart-container">
-                        <div class="pie-chart-label">By Recommendation</div>
-                        <div class="pie-chart pie-chart-recommendations">
-                            <div class="pie-chart-center">9</div>
-                        </div>
-                        <div class="pie-legend">
-                            <div class="pie-legend-item"><span class="pie-legend-dot abolish"></span>Cancel (1)</div>
-                            <div class="pie-legend-item"><span class="pie-legend-dot reform"></span>Reform (3)</div>
-                            <div class="pie-legend-item"><span class="pie-legend-dot maintain"></span>Maintain (2)</div>
-                            <div class="pie-legend-item"><span class="pie-legend-dot new"></span>Repurpose (2)</div>
-                            <div class="pie-legend-item"><span class="pie-legend-dot pause"></span>Pause (1)</div>
-                        </div>
+                <div class="cards-grid" style="margin-top: 28px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                    <div class="card" style="border-top: 3px solid var(--accent-purple);">
+                        <div class="card-icon purple">🗳️</div>
+                        <h3>1 · Participatory Budgeting</h3>
+                        <p>AI-augmented deliberation that scales real decision-making power over public money—surfacing consensus, not just tallying votes.</p>
                     </div>
-                    <div class="pie-chart-container">
-                        <div class="pie-chart-label">Est. Budget Share</div>
-                        <div class="pie-chart pie-chart-budget">
-                            <div class="pie-chart-center">~$12M+</div>
-                        </div>
-                        <div class="pie-legend">
-                            <div class="pie-legend-item"><span class="pie-legend-dot new"></span>Repurpose (~75%)</div>
-                            <div class="pie-legend-item"><span class="pie-legend-dot reform"></span>Reform (~15%)</div>
-                            <div class="pie-legend-item"><span class="pie-legend-dot maintain"></span>Maintain (~10%)</div>
-                        </div>
+                    <div class="card" style="border-top: 3px solid var(--accent-green);">
+                        <div class="card-icon green">📱</div>
+                        <h3>2 · City Currency System</h3>
+                        <p>Stablecoin-based municipal payment rails that capture transaction fees for the city instead of Wall Street.</p>
                     </div>
-                </div>
-
-                <table class="data-table compact" style="margin-top: 16px;">
-                    <thead>
-                        <tr>
-                            <th>Program</th>
-                            <th>Summary</th>
-                            <th>Est. Budget</th>
-                            <th>Recommendation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Office of Digital Assets</strong></td>
-                            <td class="summary-cell">Industry liaison office via EO 57; promotes crypto adoption</td>
-                            <td>$736K - $1.79M</td>
-                            <td><span class="status-badge reform">Reduce Budget</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Crypto Advisory Council</strong></td>
-                            <td class="summary-cell">150+ execs focused on speculation; needs broader expertise mix</td>
-                            <td>$90K - $340K</td>
-                            <td><span class="status-badge reform">Reform</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>NYC Blockchain Center</strong></td>
-                            <td class="summary-cell">Chelsea hub via NYCEDC; run by private operators</td>
-                            <td>$320K - $885K</td>
-                            <td><span class="status-badge maintain">Collaborate</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>NYC Node Program</strong></td>
-                            <td class="summary-cell">Ethereum node at CUNY; educational focus</td>
-                            <td>$74K - $232K</td>
-                            <td><span class="status-badge maintain">Maintain</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>MyCity Crypto Components</strong></td>
-                            <td class="summary-cell">Repurpose blockchain spend for city payment rails</td>
-                            <td>$9.25M - $34.7M</td>
-                            <td><span class="status-badge new">Repurpose</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Blockchain Week NYC</strong></td>
-                            <td class="summary-cell">Refocus to connect crypto experts with community orgs</td>
-                            <td>$185K - $555K</td>
-                            <td><span class="status-badge reform">Refocus</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Crypto Tax Payments</strong></td>
-                            <td class="summary-cell">Accepting crypto for taxes; similar programs failed elsewhere</td>
-                            <td>Not impl.</td>
-                            <td><span class="status-badge abolish">Cancel</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>BitBonds Proposal</strong></td>
-                            <td class="summary-cell">Reimagine with stablecoins for low-income bond access</td>
-                            <td>TBD</td>
-                            <td><span class="status-badge new">Reimagine</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>NYC Blockchain Plan</strong></td>
-                            <td class="summary-cell">Dec 2025 framework; skeptical of blockchain necessity</td>
-                            <td>TBD</td>
-                            <td><span class="status-badge pause">Pause</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="stats-row" style="margin-top: 20px;">
-                    <div class="stat">
-                        <div class="stat-value coral">$2M - $5M</div>
-                        <div class="stat-label">Estimated annual spending</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value coral">0</div>
-                        <div class="stat-label">Community reps on advisory bodies</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value coral">100+</div>
-                        <div class="stat-label">Use cases reviewed in Blockchain Plan</div>
+                    <div class="card" style="border-top: 3px solid var(--accent-blue);">
+                        <div class="card-icon blue">📡</div>
+                        <h3>3 · Municipal Mesh WiFi</h3>
+                        <p>A community-owned mesh network that breaks ISP monopolies and bridges the digital divide—fulfilling the City's own 2020 Internet Master Plan.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== SLIDE 6: Office of Digital Assets ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label amber">Program 1</span>
-                <h2>Office of Digital Assets & Blockchain <span class="status-badge reform">Reduce Budget</span></h2>
-                <p class="lead">Created October 14, 2025 via Executive Order 57. <strong>Primary recommendation: reduce the budget significantly</strong> and redirect remaining resources toward community use cases rather than industry promotion. Est. budget: $736K - $1.79M annually.</p>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology</h4>
-                    <p>Estimate based on comparable NYC mayoral office staffing: Executive Director ($180-220K), 2 Policy Analysts ($140-180K), Admin ($65-85K), plus 35% benefits. Operating costs include office space within OTI, events/outreach, and consulting. Benchmarked against Mayor's Office of Climate & Media offices.</p>
-                    <span class="source-link">Sources: <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2024/05/OTI.pdf" target="_blank">OTI FY25 Budget</a>, <a href="https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e" target="_blank">NYC Payroll Data</a>, <a href="https://www.nyc.gov/content/dam/nycgov/mayors-office/downloads/pdf/executive-orders/2025/eo-57.pdf" target="_blank">Executive Order 57</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 10px; font-size: 0.95rem;">Current Problems</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet coral"></span>Mission focused on <strong>industry promotion</strong> not residents</li>
-                            <li><span class="bullet coral"></span>Emphasis on "world's hub" and "attract talent"</li>
-                            <li><span class="bullet coral"></span>High-finance use cases prioritized</li>
-                        </ul>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 14px; font-size: 0.95rem;">Suggested New Missions (if retained)</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Community currencies</strong> for local economies</li>
-                            <li><span class="bullet"></span><strong>Mutual aid tools</strong> for neighborhood resilience</li>
-                            <li><span class="bullet"></span><strong>Cooperative infrastructure</strong> for worker ownership</li>
-                            <li><span class="bullet"></span><strong>Financial inclusion</strong> for unbanked residents</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="recommendation-box reform" style="margin-bottom: 12px;">
-                            <h4>Recommended Path</h4>
-                            <p style="font-size: 0.85rem;"><strong>Reduce budget significantly</strong> — cut industry promotion activities and redirect remaining resources toward community-focused initiatives. Amend EO 57 to shift from high-finance speculation to social utility. Partner with community organizations, not Wall Street.</p>
-                        </div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Day 1 Actions</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet amber"></span><span class="bullet-text"><strong>Reduce budget significantly</strong> — cut industry promotion spending</span></li>
-                            <li><span class="bullet"></span><span class="bullet-text"><strong>Amend EO 57</strong> — rewrite mission statement</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 8: Crypto Advisory Council ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label amber">Program 2</span>
-                <h2>NYC Crypto Advisory Council <span class="status-badge reform">Reform</span></h2>
-                <p class="lead">Currently 150+ executives focused on speculation and industry promotion. Reform to balance expertise across different crypto applications—not just finance, but also public goods and community infrastructure. Est. budget: $90K - $340K annually.</p>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology</h4>
-                    <p>Advisory councils have low direct costs (unpaid members) but require staff support. Estimate: Council Coordinator (0.5-1 FTE: $45-110K), event costs ($15-75K), meeting expenses (4-6/year: $10-40K), communications/legal. Benchmarked against comparable NYC industry advisory bodies.</p>
-                    <span class="source-link">Sources: <a href="https://www.coindesk.com/policy/2025/05/20/nyc-mayor-eric-adams-creating-crypto-advisory-council" target="_blank">CoinDesk Advisory Council</a>, <a href="https://techtalentpipeline.nyc/" target="_blank">NYC Tech Talent Pipeline</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 14px; font-size: 1rem;">Current Problems</h3>
-                        <ul class="bullet-list">
-                            <li><span class="bullet coral"></span><strong>Narrow expertise:</strong> Heavy on trading/finance, lacking in governance, identity, infrastructure</li>
-                            <li><span class="bullet coral"></span><strong>Speculation focus:</strong> Emphasis on investment over social utility applications</li>
-                            <li><span class="bullet coral"></span><strong>No transparency:</strong> No published membership, no meeting minutes</li>
-                        </ul>
-                        <h3 style="color: var(--accent-green); margin-bottom: 14px; margin-top: 16px; font-size: 1rem;">Reformed Expertise Mix</h3>
-                        <ul class="bullet-list">
-                            <li><span class="bullet"></span><strong>Public goods builders:</strong> Gitcoin, Protocol Labs, regenerative crypto experts</li>
-                            <li><span class="bullet"></span><strong>Governance researchers:</strong> Quadratic voting, DAOs, participatory mechanisms</li>
-                            <li><span class="bullet"></span><strong>Infrastructure devs:</strong> Payment rails, identity systems, municipal applications</li>
-                            <li><span class="bullet"></span><strong>Industry (balanced):</strong> Retain some finance expertise, add social impact focus</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="recommendation-box reform">
-                            <h4>Day 1 Action</h4>
-                            <p>Issue executive order reforming council to broaden expertise beyond speculation. Add crypto experts working on public goods, governance mechanisms, and municipal infrastructure. Shift mandate from "industry promotion" to "advising on beneficial applications." Publish membership roster and meeting minutes.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 9: NYC Blockchain Center ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label green">Program 3</span>
-                <h2>NYC Blockchain Center <span class="status-badge maintain">Collaborate</span></h2>
-                <p class="lead">Chelsea-based innovation hub via NYCEDC. A valuable resource for blockchain expertise and policy collaboration. Run by GBBC Labs and Future\Perfect Labs. Est. budget: $320K - $885K annually.</p>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology</h4>
-                    <p>City contribution estimated from NYCEDC public-private partnership benchmarks: real estate subsidy in Chelsea ($100-300K at $70-100/sqft), program grants ($75-250K), staff support (0.5-1 FTE: $65-135K), events/marketing ($55-150K). High uncertainty—NYCEDC does not publish program-level breakdowns.</p>
-                    <span class="source-link">Sources: <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2024/03/EDC-1.pdf" target="_blank">NYCEDC FY24 Budget</a>, <a href="https://edc.nyc/program/blockchain-initiative" target="_blank">NYCEDC Blockchain Center</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">What It Does Well</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span>Hosts blockchain startups and events</li>
-                            <li><span class="bullet"></span>Provides workspace and networking</li>
-                            <li><span class="bullet"></span>Concentrates blockchain expertise in NYC</li>
-                            <li><span class="bullet"></span>Potential partner for progressive policy development</li>
-                        </ul>
-                        <h3 style="color: var(--accent-amber); margin-bottom: 10px; margin-top: 16px; font-size: 0.95rem;">Note</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet amber"></span><strong>VC fund involvement</strong> (Future\Perfect Labs) — worth monitoring for potential conflicts</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="recommendation-box maintain" style="margin-bottom: 12px;">
-                            <h4>Recommendation</h4>
-                            <p style="font-size: 0.85rem;">Engage as a <strong>policy collaboration partner</strong>. Suggest the Center balance its industry-focused activities with community-based New York activities: financial infrastructure for local organizations, tools for unbanked New Yorkers, programming for neighborhood cooperatives, and partnerships with community land trusts and mutual aid networks.</p>
-                        </div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Suggested Engagement</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Reach out</strong> to explore policy collaboration</li>
-                            <li><span class="bullet"></span><strong>Leverage expertise</strong> when needed on crypto policy</li>
-                            <li><span class="bullet"></span><strong>Suggest community focus:</strong> financial inclusion for unbanked residents, infrastructure for local orgs</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 10: NYC Node Program ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label">Program 4</span>
-                <h2>NYC Node Program <span class="status-badge maintain">Maintain</span></h2>
-                <p class="lead">Ethereum node at CUNY Queens College with educational curriculum. The best of existing crypto initiatives—low cost, public institution, actual workforce development. Est. budget: $74K - $232K annually.</p>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology</h4>
-                    <p>Well-documented Ethereum validator costs: hardware ($5-15K one-time), electricity ($2-5K/yr). CUNY personnel: faculty coordinator (0.25-0.5 FTE: $25-60K), technical support ($15-40K), curriculum development ($10-30K), student stipends ($10-50K). Most cost-effective program in the portfolio.</p>
-                    <span class="source-link">Sources: <a href="https://nycnode.org/" target="_blank">NYCEDC NYC Node</a>, <a href="https://ethereum.org/en/staking/" target="_blank">Ethereum Staking</a>, <a href="https://www.cuny.edu/about/administration/offices/hr/salary-schedules/" target="_blank">CUNY Salary Schedules</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">What It Does</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span>Runs Ethereum validator node at CUNY</li>
-                            <li><span class="bullet"></span>Provides hands-on blockchain education</li>
-                            <li><span class="bullet"></span>Trains students in distributed systems</li>
-                            <li><span class="bullet"></span>Public institution (not private operators)</li>
-                        </ul>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 16px; font-size: 0.95rem;">Why It Works</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Low cost</strong> — minimal ongoing expenses</li>
-                            <li><span class="bullet"></span><strong>Educational value</strong> — practical skills training</li>
-                            <li><span class="bullet"></span><strong>Public benefit</strong> — CUNY serves working-class students</li>
-                            <li><span class="bullet"></span><strong>No industry capture</strong> — no private operators</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="recommendation-box" style="margin-bottom: 12px;">
-                            <h4>Recommendation</h4>
-                            <p style="font-size: 0.85rem;"><strong>Maintain the program</strong> but review curriculum for industry bias. Add required modules on practical crypto literacy: how to save money on remittances, how to self-bank securely, and how to avoid scams and fraud.</p>
-                        </div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Day 1 Actions</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Review curriculum</strong> for balance</li>
-                            <li><span class="bullet"></span><strong>Add practical literacy modules:</strong> saving on international remittances, self-custody for unbanked residents, scam recognition and fraud prevention</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 11: MyCity Crypto Components ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label">Program 5</span>
-                <h2>MyCity Crypto Components <span class="status-badge new">Repurpose</span></h2>
-                <p class="lead">Repurpose blockchain infrastructure for citywide payment system and NYC community currency. Est. budget: $9.25M - $34.7M (reallocated from existing MyCity blockchain spend).</p>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology</h4>
-                    <p>Total MyCity spend documented at ~$100M over 2.5 years. Blockchain allocation ($9.25-34.7M) can be redirected to: city payment rails ($15-25M), community currency infrastructure ($5-10M), privacy-preserving wallet ($3-8M).</p>
-                    <span class="source-link">Sources: <a href="https://nysfocus.com/2025/03/19/mycity-eric-adams-child-care" target="_blank">NY Focus Investigation</a>, <a href="https://www.gothamgazette.com/city/11883-city-council-mayor-adams-blockchain-cryptocurrency" target="_blank">Gotham Gazette</a>, <a href="https://legistar.council.nyc.gov/Calendar.aspx" target="_blank">City Council Hearings</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Repurposed Use Cases</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>City Payment Rails:</strong> Compete with Visa/Mastercard, reduce merchant fees</li>
-                            <li><span class="bullet"></span><strong>NYC Community Currency:</strong> Local economic resilience, keep money circulating locally</li>
-                            <li><span class="bullet"></span><strong>EBT Integration:</strong> Seamless benefits access without surveillance</li>
-                            <li><span class="bullet"></span><strong>Mutual Aid Tools:</strong> Community-to-community transfers</li>
-                        </ul>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 10px; margin-top: 14px; font-size: 0.95rem;">Must Address</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet coral"></span><strong>Cancel food tracking</strong> — no purchase surveillance</li>
-                            <li><span class="bullet coral"></span><strong>Privacy by design</strong> — no law enforcement data sharing</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="recommendation-box" style="margin-bottom: 12px;">
-                            <h4>New Vision</h4>
-                            <p style="font-size: 0.85rem;"><strong>Transform MyCity wallet</strong> into public payment infrastructure that serves residents. City payment system can save merchants 2-3% in fees, fund community programs, and provide financial access to unbanked New Yorkers.</p>
-                        </div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Day 1 Actions</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Cancel surveillance features</strong> immediately</li>
-                            <li><span class="bullet"></span><strong>RFP for city payment rails</strong></li>
-                            <li><span class="bullet"></span><strong>Community currency pilot</strong> in select neighborhoods</li>
-                            <li><span class="bullet"></span><strong>Privacy audit</strong> of all wallet features</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 12: Blockchain Week NYC ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label amber">Program 6</span>
-                <h2>Blockchain Week NYC <span class="status-badge reform">Refocus</span></h2>
-                <p class="lead">Repurpose from industry showcase to a bridge between crypto experts and NYC community organizers, small business owners, and local organizations who could benefit from cryptographic financial rails. Est. budget: $185K - $555K annually.</p>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology</h4>
-                    <p>Current budget ($185-555K): Propose reallocation toward community-expert matchmaking, local business outreach, and neighborhood-focused programming rather than industry-only events.</p>
-                    <span class="source-link">Sources: <a href="https://edc.nyc/press-release/nycedc-and-coindesk-announce-second-annual-blockchain-week-nyc-returning-may-10-17" target="_blank">NYCEDC Blockchain Week</a>, <a href="https://www.coindesk.com/consensus" target="_blank">CoinDesk Consensus</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 10px; font-size: 0.95rem;">Current Problems</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet coral"></span>All funding goes to CoinDesk (for-profit)</li>
-                            <li><span class="bullet coral"></span>Industry-only focus, no community benefit</li>
-                            <li><span class="bullet coral"></span>No connection to actual NYC residents or businesses</li>
-                        </ul>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 16px; font-size: 0.95rem;">Refocused Mission</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Connect crypto experts</strong> with community organizers</li>
-                            <li><span class="bullet"></span><strong>Invite local business owners</strong> who need financial infrastructure</li>
-                            <li><span class="bullet"></span><strong>Cooperative crypto tools</strong> for worker ownership</li>
-                            <li><span class="bullet"></span><strong>Accessible programming</strong> for non-industry New Yorkers</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="recommendation-box reform" style="margin-bottom: 12px;">
-                            <h4>New Model</h4>
-                            <p style="font-size: 0.85rem;"><strong>Community-Expert Bridge:</strong> Transform Blockchain Week into a venue where cryptographic experts meet NYC community organizers, small businesses, and local orgs who could genuinely benefit from crypto financial rails — not just an industry conference.</p>
-                        </div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Day 1 Actions</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Partner with Decentral Park NYC, Greenpill NYC</strong></li>
-                            <li><span class="bullet"></span><strong>Invite local orgs</strong> needing financial infrastructure</li>
-                            <li><span class="bullet"></span><strong>Create matchmaking sessions</strong> between experts and community</li>
-                            <li><span class="bullet"></span><strong>Require NYC-focused outcomes</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 13: Crypto Tax Payments ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label coral">Program 7</span>
-                <h2>Crypto Tax Payments <span class="status-badge abolish">Cancel</span></h2>
-                <p class="lead">Proposed but never implemented. Similar programs elsewhere have seen negligible adoption—Colorado received only 78 payments totaling ~$57,000 over 3 years (0.0005% of state tax revenue). Utah has received zero payments since 2023 launch.</p>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology (If Implemented)</h4>
-                    <p>Benchmarked against Colorado's program (2022): payment processor integration ($200-600K), DOF system modifications ($150-500K), security/compliance ($100-350K), training ($50-150K), ongoing fees/support ($250-550K). Colorado had &lt;80 total payments in 3 years—cost-benefit is questionable.</p>
-                    <span class="source-link">Sources: <a href="https://tax.colorado.gov/cryptocurrency" target="_blank">Colorado Crypto Tax</a>, <a href="https://www.coindesk.com/markets/2019/10/03/ohio-treasurer-suspends-predecessors-bitcoin-tax-payment-service" target="_blank">Ohio Program (defunct)</a>, <a href="https://qz.com/2165639/miamis-mayor-backed-miamicoin-then-its-price-dropped-95-percent" target="_blank">Miami MiamiCoin</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 14px; font-size: 1rem;">Why These Programs Fail</h3>
-                        <ul class="bullet-list">
-                            <li><span class="bullet coral"></span><strong>Capital gains tax:</strong> Spending crypto triggers taxable event</li>
-                            <li><span class="bullet coral"></span><strong>Economic disincentive:</strong> Exchange fees (1-2%) higher than free ACH</li>
-                            <li><span class="bullet coral"></span><strong>Holder mentality:</strong> People view crypto as investment, not payment</li>
-                            <li><span class="bullet coral"></span><strong>Opportunity cost:</strong> Strong returns discourage spending</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 14px; font-size: 1rem;">Documented Failures</h3>
-                        <ul class="bullet-list">
-                            <li><span class="bullet coral"></span><strong>Colorado:</strong> 78 payments, $57K in 3 years</li>
-                            <li><span class="bullet coral"></span><strong>Utah:</strong> Zero payments since Jan 2023</li>
-                            <li><span class="bullet coral"></span><strong>Ohio:</strong> Program suspended 2019</li>
-                            <li><span class="bullet coral"></span><strong>Cost vs benefit:</strong> $850K-$2.5M to implement for negligible use</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="recommendation-box abolish" style="margin-top: 24px;">
-                    <h4>Recommendation: Cancel</h4>
-                    <p>Do not implement. Every comparable program has seen negligible adoption. Colorado's $57,000 in 3 years doesn't justify an $850K-$2.5M implementation cost. Focus city resources on programs with proven demand instead of chasing crypto headlines.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 14: BitBonds ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label purple">Program 8</span>
-                <h2>Municipal Bonds Program <span class="status-badge new">Reimagine</span></h2>
-                <p class="lead">Re-evaluate with stablecoins (not volatile Bitcoin). The $4.2 trillion muni bond market is ripe for disruption — current issuance costs 2-5% of total raise, and only 18% uses electronic trading. Enable lower-income residents to purchase yield-bearing municipal bonds.</p>
-
-                <div class="stats-row" style="margin-bottom: 20px;">
-                    <div class="stat">
-                        <div class="stat-value">$4.2T</div>
-                        <div class="stat-label">Municipal bond market size</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value">66%</div>
-                        <div class="stat-label">Held by households (retail)</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value">2-5%</div>
-                        <div class="stat-label">Current issuance costs</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value">18%</div>
-                        <div class="stat-label">Uses electronic trading</div>
-                    </div>
-                </div>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology</h4>
-                    <p>Implementation costs: bond issuance platform ($500K-1.5M), stablecoin integration ($200-500K), low-denomination infrastructure ($300-800K), outreach ($100-300K). Revenue potential: if 100,000 residents invest average $500 at 4% yield, generates $2M annually for rent relief fund.</p>
-                    <span class="source-link">Sources: <a href="https://comptroller.nyc.gov/reports/annual-report-on-capital-debt-and-obligations/" target="_blank">NYC Comptroller Debt Mgmt</a>, <a href="https://www.circle.com/en/usdc" target="_blank">USDC (Circle)</a>, <a href="https://www.cdfifund.gov/" target="_blank">Community Investment</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 10px; font-size: 0.95rem;">Current Market Problems</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet coral"></span><strong>High issuance costs:</strong> 2-5% of total raise goes to intermediaries</li>
-                            <li><span class="bullet coral"></span><strong>Illiquid market:</strong> Only 1% of muni bonds trade daily</li>
-                            <li><span class="bullet coral"></span><strong>Inaccessible:</strong> Retail investors can't easily customize tax-free exposure</li>
-                            <li><span class="bullet coral"></span><strong>BitBonds flaw:</strong> Bitcoin volatility (50-80% crashes) inappropriate for city</li>
-                        </ul>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 14px; font-size: 0.95rem;">Stablecoin Solution</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>USDC/USDT:</strong> No volatility, pegged 1:1 to dollar</li>
-                            <li><span class="bullet"></span><strong>No capital gains tax</strong> for bondholders</li>
-                            <li><span class="bullet"></span><strong>24/7 settlement</strong> — faster than traditional bonds</li>
-                            <li><span class="bullet"></span><strong>Lower minimums</strong> — accessible to working class</li>
-                        </ul>
-                        <h3 style="color: var(--accent-blue); margin-bottom: 10px; margin-top: 14px; font-size: 0.95rem;">Already Happening</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong><a href="https://www.bondbuyer.com/news/quincy-massachusetts-issues-first-ever-blockchain-bond-deal-in-u-s" target="_blank" style="color: var(--accent-blue);">Quincy, MA (2024)</a>:</strong> First U.S. blockchain municipal bond — $10M via JP Morgan's Onyx platform</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="recommendation-box" style="margin-bottom: 12px; background: var(--accent-purple-bg);">
-                            <h4 style="color: var(--accent-purple);">Community Wealth Model</h4>
-                            <p style="font-size: 0.85rem;"><strong>Enable lower-income New Yorkers</strong> to invest in city bonds with as little as $25. Yield goes to investors AND funds rent control relief. Builds community stake in city's fiscal health.</p>
-                        </div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Day 1 Actions</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Feasibility study</strong> on stablecoin municipal bonds</li>
-                            <li><span class="bullet"></span><strong>Partner with community banks</strong> for distribution</li>
-                            <li><span class="bullet"></span><strong>Low-denomination pilot</strong> ($25-100 minimum)</li>
-                            <li><span class="bullet"></span><strong>Rent relief fund allocation</strong> from yields</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 15: NYC Blockchain Plan ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label coral">Program 9</span>
-                <h2>NYC Blockchain Plan <span class="status-badge pause">Pause</span></h2>
-                <p class="lead">Released December 2025 by OTI. We are not convinced this is a good use case for crypto. Asbestos certs, vital records, and property deeds can all be enshrined in publicly verifiable ways without blockchain. Pilot costs TBD.</p>
-
-                <div class="budget-box">
-                    <h4>Budget Methodology</h4>
-                    <p>Specific costs not yet published. Based on comparable government blockchain pilots: development ($300K-1M), integration ($500K-1.5M), security audits ($150-400K), per pilot. Dubai Land Registry ($3-5M), Cook County IL property records (~$2M), Estonia e-Residency ($10M+). Each NYC pilot should require cost-benefit analysis.</p>
-                    <span class="source-link">Sources: <a href="https://www.nyc.gov/content/oti/pages/" target="_blank">NYC OTI</a>, <a href="https://www.dlnews.com/articles/regulation/nyc-mayor-says-city-exploring-crypto-for-taxes-and-records/" target="_blank">DL News</a>, <a href="https://e-resident.gov.ee/" target="_blank">Estonia e-Residency</a></span>
-                </div>
-
-                <div class="two-col">
-                    <div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 10px; font-size: 0.95rem;">Core Skepticism</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet coral"></span><strong>Asbestos Certs</strong> — conventional databases can do this</li>
-                            <li><span class="bullet coral"></span><strong>Vital Records</strong> — non-blockchain public verification exists</li>
-                            <li><span class="bullet coral"></span><strong>Property Deeds</strong> — existing systems with digital signatures work</li>
-                            <li><span class="bullet coral"></span><strong>City Payments</strong> — low demand, unnecessary complexity</li>
-                        </ul>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 12px; font-size: 0.95rem;">Salvageable Elements</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span>Establishing evaluation criteria is a good direction</li>
-                            <li><span class="bullet"></span>General approach could work IF community input is added</li>
-                            <li><span class="bullet"></span>Could improve IF reframed to be NYC-focused, not industry-only</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <div class="recommendation-box pause" style="margin-bottom: 12px;">
-                            <h4>Recommendation: Freeze This Program</h4>
-                            <p style="font-size: 0.85rem;"><strong>Pause all pilots if possible.</strong> These use cases do not clearly require blockchain — publicly verifiable data can be achieved through conventional cryptographic methods. If the program continues, require community input, NYC-focused framing, and rigorous alternatives analysis.</p>
-                        </div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 10px; font-size: 0.95rem;">Day 1 Actions</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet coral"></span><strong>Freeze all pilots</strong> pending review</li>
-                            <li><span class="bullet coral"></span><strong>Require alternatives analysis</strong> — prove blockchain is necessary</li>
-                            <li><span class="bullet amber"></span><strong>If continued:</strong> add community input, NYC-focused framing</li>
-                            <li><span class="bullet amber"></span><strong>Retain evaluation criteria</strong> requirement for any proposals</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== PART II DIVIDER ==================== -->
-        <div class="slide part-divider">
-            <div class="slide-content">
-                <div class="part-number">Part II</div>
-                <h2>New Proposals for<br>Community Infrastructure</h2>
-                <p class="part-subtitle">Two bold proposals for community-governed technology infrastructure</p>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 13: Proposals Overview ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label">Part II Overview</span>
-                <h2>Two Bold Proposals for Community Infrastructure</h2>
-                <p class="lead">A comprehensive framework for incorporating community-governed technology infrastructure into NYC's future.</p>
-
-                <div class="two-col" style="margin-top: 20px;">
-                    <div>
-                        <div class="cards-grid" style="grid-template-columns: 1fr;">
-                            <div class="card">
-                                <div class="card-icon purple">💰</div>
-                                <h3>Participatory Budgeting</h3>
-                                <p>Quadratic voting and blockchain-verified democratic decision-making for community resources</p>
-                            </div>
-                            <div class="card">
-                                <div class="card-icon green">📱</div>
-                                <h3>City Currency System</h3>
-                                <p>Stablecoin-based municipal payment system to capture value from payment rails</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="recommendation-box" style="margin-top: 0; background: var(--accent-purple-bg); padding: 16px; border-left: 3px solid var(--accent-purple);">
-                            <h4 style="color: var(--accent-purple);">Why Cities?</h4>
-                            <p style="font-size: 0.8rem; margin-bottom: 10px;">Per the <a href="https://www.usecaselab.org/verifiable-cities" target="_blank" style="color: var(--accent-purple);">Ethereum Foundation Use Case Lab</a>:</p>
-                            <ul style="font-size: 0.8rem; color: var(--text-secondary); padding-left: 16px; margin: 0;">
-                                <li style="margin-bottom: 6px;"><strong>Proximity:</strong> Cities are where coordination and service delivery must happen in real time, with proximity to concerned residents</li>
-                                <li style="margin-bottom: 6px;"><strong>Pragmatism:</strong> Cities face immediate service demands requiring practical, not theoretical, solutions</li>
-                                <li style="margin-bottom: 6px;"><strong>Replicability:</strong> Thousands of municipalities face common operational needs—solutions can scale across cities</li>
-                                <li><strong>Leverage:</strong> Cities are powerful levers for public sector innovation, offering scalable pathways for modernizing civic capacity</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 14: Participatory Budgeting ==================== -->
+        <!-- ==================== SLIDE 8: Participatory Budgeting (AI-augmented deliberation) ==================== -->
         <div class="slide section-slide">
             <div class="slide-content">
                 <span class="section-label purple">Proposal 1</span>
                 <h2>Participatory Budgeting</h2>
-                <p class="lead">Use blockchain-verified voting and quadratic mechanisms to give New Yorkers real decision-making power over public resources—from neighborhood budgets to pension investments.</p>
+                <p class="lead">Give New Yorkers real decision-making power over public resources—using <strong>AI-augmented deliberation</strong> to scale honest conversation among thousands of residents, surface where they actually agree, and turn that consensus into funded priorities.</p>
 
-                <div class="two-col" style="margin-top: 20px;">
+                <!-- Deliberation funnel graphic -->
+                <div class="delib-flow">
+                    <div class="delib-step"><div class="delib-icon">🗣️</div><div class="delib-label">Thousands of residents share &amp; rate short statements</div></div>
+                    <div class="delib-arrow">→</div>
+                    <div class="delib-step"><div class="delib-icon">🤖</div><div class="delib-label">AI clusters opinion &amp; surfaces cross-group consensus</div></div>
+                    <div class="delib-arrow">→</div>
+                    <div class="delib-step"><div class="delib-icon">🧭</div><div class="delib-label">Shared priorities become a clear, legible shortlist</div></div>
+                    <div class="delib-arrow">→</div>
+                    <div class="delib-step"><div class="delib-icon">💸</div><div class="delib-label">Community vote allocates the budget</div></div>
+                </div>
+
+                <div class="two-col" style="margin-top: 22px;">
                     <div>
-                        <div class="recommendation-box" style="margin-top: 0; background: var(--accent-blue-bg); padding: 14px; border-left: 3px solid var(--accent-blue);">
-                            <h4 style="color: var(--accent-blue); font-size: 0.75rem;">Proven in NYC: Harlem District 9</h4>
-                            <p style="font-size: 0.8rem;">In 2023, <a href="https://www.radicalxchange.org/wiki/nyc-qv/" target="_blank" style="color: var(--accent-blue);">RadicalxChange and Council Member Kristin Richardson Jordan</a> ran the first US quadratic voting participatory budget—online, blockchain-verified, open to the whole constituency. <strong>80% satisfaction rate.</strong> Top-funded: Baxter affordable housing ($1M), Marcus Garvey Playground ($275K).</p>
-                        </div>
-
-                        <h3 style="color: var(--accent-purple); margin-bottom: 10px; margin-top: 16px; font-size: 0.95rem;">Why Quadratic Voting?</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.85rem; margin-bottom: 12px;">Traditional voting lets wealthy interests dominate. Quadratic voting gives everyone voice credits they can spread across issues—caring deeply costs more, so broad consensus wins over narrow intensity.</p>
+                        <h3 style="color: var(--accent-purple); margin-bottom: 10px; font-size: 0.95rem;">Why AI-Augmented Polis, Not Quadratic Voting</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.85rem; margin-bottom: 12px;"><a href="https://compdemocracy.org/polis/" target="_blank" style="color: var(--accent-purple);">Polis</a> lets residents vote agree/disagree on short statements; machine learning groups them into opinion clusters and highlights the statements that win support <strong>across</strong> groups. New AI tools then summarize millions of inputs in minutes. The result rewards bridge-building over loud minorities—and avoids the usability wall that has kept quadratic voting from real adoption.</p>
                         <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet purple"></span><strong>Anti-plutocracy:</strong> Prevents whales from buying outcomes</li>
-                            <li><span class="bullet purple"></span><strong>Amplifies consensus:</strong> Broad support beats narrow intensity</li>
-                            <li><span class="bullet purple"></span><strong>Delegation:</strong> Voters can delegate to trusted community reps</li>
+                            <li><span class="bullet purple"></span><strong>Scales deliberation:</strong> thousands deliberate, not just vote</li>
+                            <li><span class="bullet purple"></span><strong>Surfaces consensus:</strong> finds what most residents already agree on</li>
+                            <li><span class="bullet purple"></span><strong>Human-in-the-loop:</strong> AI summarizes; people decide</li>
                         </ul>
+                        <div class="recommendation-box" style="margin-top: 14px; background: var(--accent-blue-bg); padding: 12px; border-left: 3px solid var(--accent-blue);">
+                            <h4 style="color: var(--accent-blue); font-size: 0.72rem;">Proven in NYC: Harlem District 9</h4>
+                            <p style="font-size: 0.8rem;">In 2023, <a href="https://www.radicalxchange.org/wiki/nyc-qv/" target="_blank" style="color: var(--accent-blue);">RadicalxChange and Council Member Kristin Richardson Jordan</a> ran the first US online, verifiable participatory budget open to a whole constituency. <strong>80% satisfaction.</strong> Top-funded: Baxter affordable housing ($1M), Marcus Garvey Playground ($275K).</p>
+                        </div>
                     </div>
                     <div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Applications for NYC</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet"></span><strong>Community Board budgets:</strong> Let residents vote on neighborhood spending</li>
-                            <li><span class="bullet"></span><strong>Pension fund allocation:</strong> Workers vote on how their $250B+ is invested</li>
-                            <li><span class="bullet"></span><strong>Capital projects:</strong> Community input on infrastructure priorities</li>
-                            <li><span class="bullet"></span><strong>Grant distribution:</strong> Quadratic funding for community organizations</li>
+                        <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Already Working at City Scale</h3>
+                        <div class="stats-row" style="margin-top: 0; gap: 28px;">
+                            <div class="stat"><div class="stat-value">7,890</div><div class="stat-label">residents in Bowling Green, KY (2025) shaping the city's 25-year plan</div></div>
+                            <div class="stat"><div class="stat-value">1M+</div><div class="stat-label">votes cast in 33 days; 2,370 ideas reached &gt;80% agreement</div></div>
+                        </div>
+                        <ul class="bullet-list" style="font-size: 0.85rem; margin-top: 14px;">
+                            <li><span class="bullet"></span><strong><a href="https://www.technologyreview.com/2018/08/21/240284/" target="_blank" style="color: var(--accent-blue);">vTaiwan</a>:</strong> Polis deliberation converged thousands on ride-hailing rules the government then adopted</li>
+                            <li><span class="bullet"></span><strong><a href="https://www.anthropic.com/research/collective-constitutional-ai-aligning-a-language-model-with-public-input" target="_blank" style="color: var(--accent-blue);">Anthropic Collective Constitutional AI</a>:</strong> ~1,000 representative Americans, 1,127 statements, 38,252 votes drafted public AI rules via Polis</li>
+                            <li><span class="bullet"></span><strong><a href="https://medium.com/jigsaw/making-sense-of-large-scale-online-conversations-b153340bda55" target="_blank" style="color: var(--accent-blue);">Google Jigsaw "Sensemaking"</a>:</strong> open-source AI cuts Polis report analysis "from weeks to minutes"</li>
+                            <li><span class="bullet"></span><strong><a href="https://decidim.org/" target="_blank" style="color: var(--accent-blue);">Barcelona Decidim</a>:</strong> open-source participation platform, 150+ cities</li>
                         </ul>
-
-                        <h3 style="color: var(--accent-coral); margin-bottom: 10px; margin-top: 14px; font-size: 0.95rem;">Global Examples</h3>
-                        <ul class="bullet-list" style="font-size: 0.85rem;">
-                            <li><span class="bullet coral"></span><strong><a href="https://www.mos.ru/en/news/item/80669073/" target="_blank" style="color: var(--accent-blue);">Moscow Active Citizen</a>:</strong> 5M+ users, blockchain voting since 2017</li>
-                            <li><span class="bullet coral"></span><strong><a href="https://decidim.org/" target="_blank" style="color: var(--accent-blue);">Barcelona Decidim</a>:</strong> Open-source platform, 150+ cities</li>
-                        </ul>
-
-                        <div class="recommendation-box" style="margin-top: 14px; background: var(--accent-purple-bg); padding: 14px;">
-                            <h4 style="color: var(--accent-purple); font-size: 0.75rem;">Implementation</h4>
-                            <p style="font-size: 0.8rem;">Scale the Harlem pilot citywide. Partner with RadicalxChange for methodology, use existing tools (Snapshot, Tally) adapted for municipal use.</p>
+                        <div class="recommendation-box" style="margin-top: 14px; background: var(--accent-purple-bg); padding: 12px;">
+                            <h4 style="color: var(--accent-purple); font-size: 0.72rem;">Applications for NYC</h4>
+                            <p style="font-size: 0.8rem;">Community Board budgets, capital-project priorities, pension-investment input ($250B+), and community-grant distribution—starting by scaling the Harlem pilot citywide with open-source tooling.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== SLIDE 18: City Currency System ==================== -->
+        <!-- ==================== SLIDE 9: City Currency System ==================== -->
         <div class="slide section-slide">
             <div class="slide-content">
                 <span class="section-label green">Proposal 2</span>
@@ -1893,7 +1413,6 @@
                             <li><span class="bullet purple"></span><strong>Capture all fees:</strong> Transaction fees fund city services, not Wall Street</li>
                             <li><span class="bullet purple"></span><strong>Instant settlement:</strong> No 3-day wait for merchant deposits</li>
                         </ul>
-
                         <div class="recommendation-box" style="margin-top: 16px;">
                             <h4>Key Insight</h4>
                             <p style="font-size: 0.85rem;">The city already enables billions in commerce through its infrastructure. A municipal stablecoin lets NYC capture the value of its own economy—transaction fees become city revenue, treasury reserves earn yield, and residents benefit from lower merchant costs.</p>
@@ -1903,90 +1422,494 @@
             </div>
         </div>
 
-        <!-- ==================== SLIDE 20: Key Stakeholders ==================== -->
+        <!-- ==================== SLIDE 10: Municipal Mesh WiFi (merged from PR #12) ==================== -->
         <div class="slide section-slide">
             <div class="slide-content">
-                <span class="section-label">Implementation</span>
-                <h2>Key Stakeholders to Engage</h2>
-                <p class="lead">Building the coalition for decentralized NYC infrastructure.</p>
-
-                <div class="stakeholder-tags" style="margin-top: 32px;">
-                    <span class="stakeholder-tag" style="background: var(--accent-purple-bg); border-color: var(--accent-purple);">⟠ Ethereum Foundation Use Case Lab</span>
-                    <span class="stakeholder-tag">🌱 Greenpill NYC</span>
-                    <span class="stakeholder-tag">🏛️ Metagov</span>
-                    <span class="stakeholder-tag">♻️ Regen Foundation</span>
-                    <span class="stakeholder-tag">📡 NYC Mesh</span>
-                    <span class="stakeholder-tag">📞 People's Choice Communications</span>
-                    <span class="stakeholder-tag">🤝 Worker Cooperatives</span>
-                    <span class="stakeholder-tag">🌍 ESG-focused Businesses</span>
-                    <span class="stakeholder-tag">🏠 Tenant Organizations</span>
-                    <span class="stakeholder-tag">⚙️ Labor Unions</span>
-                    <span class="stakeholder-tag">📚 CUNY</span>
-                    <span class="stakeholder-tag">🔬 BetaNYC</span>
-                    <span class="stakeholder-tag">💳 Consumer Advocates</span>
-                </div>
-
-                <div class="recommendation-box" style="margin-top: 24px; background: var(--accent-purple-bg); padding: 16px; border-left: 3px solid var(--accent-purple);">
-                    <h4 style="color: var(--accent-purple);">Ethereum Foundation Use Case Lab: Verifiable Cities</h4>
-                    <p style="font-size: 0.85rem;">The EF Use Case Lab is issuing an <strong>open call for implementations</strong> with city governments, exploring where coordination and verifiability constraints are most acute in urban systems. Their <a href="https://www.usecaselab.org/verifiable-cities" target="_blank" style="color: var(--accent-purple);">Verifiable Cities track</a> examines high-impact municipal use cases—a natural collaboration partner for NYC's progressive blockchain initiatives.</p>
-                </div>
-
-                <div class="recommendation-box" style="margin-top: 32px;">
-                    <h4>Coalition Building Principle</h4>
-                    <p>Unlike past industry-capture approaches, these proposals require broad coalition support from labor, tenants, consumers, and community organizations. Technology decisions should be made with—not for—the communities they affect.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SLIDE 21: Day 1 Actions Summary ==================== -->
-        <div class="slide section-slide">
-            <div class="slide-content">
-                <span class="section-label coral">Summary</span>
-                <h2>Day 1 Actions</h2>
-                <p class="lead">Immediate executive actions for the Mamdani administration.</p>
+                <span class="section-label blue">Proposal 3</span>
+                <h2>Municipal Mesh WiFi</h2>
+                <p class="lead">By opening NYCHA rooftops to existing community networks and applying for federal money, we can build a community-owned mesh network that provides affordable Internet access, breaks ISP monopolies by replacing corporate extraction with community-owned infrastructure, and bridges the digital divide. The City's own <a href="https://www.nyc.gov/assets/cto/downloads/internet-master-plan/NYC_IMP_1.7.20_FINAL-2.pdf" target="_blank" style="color: var(--accent-blue);">Internet Master Plan (2020)</a> already endorsed this vision—but it was never implemented.</p>
 
                 <div class="two-col">
                     <div>
-                        <h3 style="color: var(--accent-coral); margin-bottom: 14px; font-size: 1rem;">Pause & Investigate</h3>
-                        <ul class="action-list">
-                            <li><span class="action-number coral">1</span>Pause MyCity crypto components — review $73M contracts</li>
-                            <li><span class="action-number coral">2</span>Freeze NYC Blockchain Plan pilots pending review</li>
-                            <li><span class="action-number coral">3</span>Affirm BitBonds rejection permanently</li>
+                        <h3 style="color: var(--accent-coral); margin-bottom: 14px; font-size: 1rem;">The Digital Divide Today</h3>
+                        <ul class="bullet-list">
+                            <li><span class="bullet coral"></span><strong><a href="https://www.nyc.gov/assets/cto/downloads/truth-in-broadband/NYC-Connected-Broadband-Report-2018.pdf" target="_blank" style="color: inherit;">69% of NYC</a></strong> has only 1-2 ISP choices; <strong><a href="https://www.osc.ny.gov/files/reports/pdf/report-20-2025.pdf" target="_blank" style="color: inherit;">36.7% of Bronx households</a></strong> lack broadband entirely</li>
+                            <li><span class="bullet coral"></span><strong><a href="https://www.nyc.gov/assets/cto/downloads/internet-master-plan/NYC_IMP_1.7.20_FINAL-2.pdf" target="_blank" style="color: inherit;">7x income disparity</a></strong> in connectivity, with Bronx paying <strong><a href="https://broadbandnow.com/New-York/Bronx" target="_blank" style="color: inherit;">$79.83/month</a></strong> vs <a href="https://broadbandnow.com/New-York/New-York" target="_blank" style="color: inherit;">$56 in Manhattan</a></li>
+                            <li><span class="bullet coral"></span>The <a href="https://www.nyc.gov/assets/cto/downloads/internet-master-plan/NYC_IMP_1.7.20_FINAL-2.pdf" target="_blank" style="color: inherit;">Internet Master Plan</a> found <strong>29% of households</strong> lack broadband and <strong>1.5 million</strong> New Yorkers have neither mobile nor home connection</li>
                         </ul>
-                        <h3 style="color: var(--accent-amber); margin-bottom: 14px; margin-top: 20px; font-size: 1rem;">Reduce & Reform</h3>
-                        <ul class="action-list">
-                            <li><span class="action-number amber">1</span>Reduce Office of Digital Assets budget significantly</li>
-                            <li><span class="action-number amber">2</span>Reform Advisory Council — broaden expertise beyond speculation</li>
-                            <li><span class="action-number amber">3</span>Refocus Blockchain Week to connect experts with local orgs</li>
+                        <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 16px; font-size: 1rem;">Community Networks Already Work</h3>
+                        <ul class="bullet-list" style="font-size: 0.85rem;">
+                            <li><span class="bullet"></span><strong><a href="https://www.nycmesh.net/" target="_blank" style="color: var(--accent-blue);">NYC Mesh</a>:</strong> 2,000+ nodes, <a href="https://projects.propublica.org/nonprofits/organizations/842616395" target="_blank" style="color: var(--accent-blue);">$600k/year budget</a>, ~$300/node/year operating costs. The IMP's pricing table already lists NYC Mesh at <strong>$0/month</strong></li>
+                            <li><span class="bullet"></span><strong><a href="https://redhookwifi.org/" target="_blank" style="color: var(--accent-blue);">Red Hook WiFi</a>:</strong> <a href="https://www.newamerica.org/oti/blog/case-study-red-hook-initiative-wifi-tidepools/" target="_blank" style="color: var(--accent-blue);">Kept its neighborhood connected through Hurricane Sandy</a>—mesh topology routes around failures automatically</li>
                         </ul>
+                        <div class="recommendation-box" style="margin-top: 16px;">
+                            <h4>Key Insight</h4>
+                            <p style="font-size: 0.85rem;"><a href="https://assets.epb.com/media/Lobo%20-%20Ten%20Years%20of%20Fiber%20Infrastructure%20in%20Hamilton%20County%20TN_Published.pdf" target="_blank" style="color: var(--accent-blue);">Chattanooga returned 12x on investment</a> ($2.69B from $220M). <a href="https://cyber.harvard.edu/publications/2018/01/communityfiber" target="_blank" style="color: var(--accent-blue);">Harvard: municipal networks are 30-50% cheaper</a>. The City's own IMP projects universal broadband would add <strong><a href="https://www.nyc.gov/assets/cto/downloads/internet-master-plan/NYC_IMP_1.7.20_FINAL-2.pdf" target="_blank" style="color: var(--accent-blue);">$142B to Gross City Product and create 165,000 jobs</a></strong>.</p>
+                        </div>
                     </div>
                     <div>
-                        <h3 style="color: var(--accent-green); margin-bottom: 14px; font-size: 1rem;">Maintain & Collaborate</h3>
-                        <ul class="action-list">
-                            <li><span class="action-number">1</span>Maintain NYC Node Program as policy research partner</li>
-                            <li><span class="action-number">2</span>Collaborate with NYC Blockchain Center on community-focused initiatives</li>
+                        <h3 style="color: var(--accent-purple); margin-bottom: 14px; font-size: 1rem;">Day 1 Actions</h3>
+                        <ul class="bullet-list" style="font-size: 0.85rem;">
+                            <li><span class="bullet purple"></span><strong>Open NYCHA rooftops:</strong> Rooftop-access directive for 2,410 NYCHA buildings at zero cost—unlocking 335 developments in the most disconnected areas. The IMP already inventoried <a href="https://www.nyc.gov/assets/cto/downloads/internet-master-plan/NYC_IMP_1.7.20_FINAL-2.pdf" target="_blank" style="color: inherit;"><strong>24,000 city-owned rooftops and poles</strong></a></li>
+                            <li><span class="bullet purple"></span><strong>Expedite streetlight permits:</strong> Fast-track category for community broadband on 400k streetlights with standardized power</li>
+                            <li><span class="bullet purple"></span><strong>End corporate welfare:</strong> Big Apple Connect <a href="https://communitynetworks.org/content/new-york-city-expands-free-wireless-missed-opportunities-loom-large" target="_blank" style="color: inherit;">funneled $90M to Spectrum and Optimum</a> for zero infrastructure; <a href="https://www.osc.ny.gov/press/releases/2021/07/dinapoli-examines-faltering-linknyc-program" target="_blank" style="color: inherit;">LinkNYC missed 41% of kiosks and owes $73M</a></li>
                         </ul>
-                        <h3 style="color: var(--accent-purple); margin-bottom: 14px; margin-top: 20px; font-size: 1rem;">Key Partners</h3>
-                        <ul class="action-list">
-                            <li><span class="action-number purple">•</span>Local community-based crypto collectives</li>
-                            <li><span class="action-number purple">•</span>Worker cooperatives, CLTs, mutual aid networks</li>
+                        <h3 style="color: var(--accent-amber); margin-bottom: 10px; margin-top: 16px; font-size: 1rem;">Year 1 Priorities</h3>
+                        <ul class="bullet-list" style="font-size: 0.85rem;">
+                            <li><span class="bullet amber"></span><strong>Stabilize community networks:</strong> $36k/yr for Red Hook backhaul; $2M/yr grants to NYC Mesh</li>
+                            <li><span class="bullet amber"></span><strong>Deploy 50 public-building supernodes:</strong> Schools, libraries, fire stations as mesh hubs—~$50k total, reaching 25,000+ residents at $2/household</li>
+                            <li><span class="bullet amber"></span><strong>Build on the new direction:</strong> the administration's May 2026 <a href="https://www.nyc.gov/mayors-office/news/2026/05/mamdani-administration--rep--ritchie-torres-announce--2-million-" target="_blank" style="color: inherit;">$2M "Neighborhood Internet" expansion</a> with Rep. Torres is a foothold to scale community-owned broadband</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== SLIDE 22: Final ==================== -->
+        <!-- ==================== PART II: EXISTING NYC PROGRAM REVIEW (summary + clickable modals) ==================== -->
+        <!-- ==================== SLIDE 11: Programs Summary (interactive) ==================== -->
+        <div class="slide section-slide">
+            <div class="slide-content">
+                <span class="section-label coral">Part II</span>
+                <h2>Existing NYC Program Review</h2>
+
+                <div class="reality-callout">
+                    <h4>⚠️ Reality check, January 2026</h4>
+                    <p>Mayor Mamdani's first executive order <strong>rescinded the post-indictment Adams directives</strong>, eliminating most of the crypto apparatus below before this document's recommendations could apply. We keep the full review for the record—<strong>click any program for the detail</strong>—but several "abolish on Day 1" calls are now simply <strong>moot</strong>. Sources: <a href="https://thehill.com/homenews/state-watch/5669436-zohran-mamdani-executive-orders-new-york-eric-adams/" target="_blank" style="color: var(--accent-coral);">The Hill</a>, <a href="https://statescoop.com/nyc-digital-assets-blockchain-office/" target="_blank" style="color: var(--accent-coral);">StateScoop</a>.</p>
+                </div>
+
+                <div class="pie-charts-row" style="margin-top: 18px;">
+                    <div class="pie-chart-container">
+                        <div class="pie-chart-label">2026 Status</div>
+                        <div class="pie-chart pie-chart-budget">
+                            <div class="pie-chart-center">9</div>
+                        </div>
+                        <div class="pie-legend">
+                            <div class="pie-legend-item"><span class="pie-legend-dot abolish"></span>Cancelled / moot (5)</div>
+                            <div class="pie-legend-item"><span class="pie-legend-dot maintain"></span>Active, not city-run (3)</div>
+                            <div class="pie-legend-item"><span class="pie-legend-dot new"></span>Repurpose intent (1)</div>
+                        </div>
+                    </div>
+                    <div class="pie-chart-container">
+                        <div class="pie-chart-label">Original Recommendation</div>
+                        <div class="pie-chart pie-chart-recommendations">
+                            <div class="pie-chart-center">9</div>
+                        </div>
+                        <div class="pie-legend">
+                            <div class="pie-legend-item"><span class="pie-legend-dot abolish"></span>Cancel (1)</div>
+                            <div class="pie-legend-item"><span class="pie-legend-dot reform"></span>Reform (3)</div>
+                            <div class="pie-legend-item"><span class="pie-legend-dot maintain"></span>Maintain (2)</div>
+                            <div class="pie-legend-item"><span class="pie-legend-dot new"></span>Repurpose (2)</div>
+                            <div class="pie-legend-item"><span class="pie-legend-dot pause"></span>Pause (1)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 16px 0 10px;">👆 Click a program for the full analysis, budget methodology, and Day-1 actions.</p>
+                <div class="program-card-grid">
+                    <div class="program-card" onclick="openProgram(1)">
+                        <div class="pc-top"><span class="status-badge reform">Reduce Budget</span><span class="pc-status cancelled">Cancelled · Jan 2026</span></div>
+                        <h4>Office of Digital Assets</h4>
+                        <p>Industry liaison office via EO 57; eliminated by Mamdani's rescission order.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                    <div class="program-card" onclick="openProgram(2)">
+                        <div class="pc-top"><span class="status-badge reform">Reform</span><span class="pc-status cancelled">Defunct · Jan 2026</span></div>
+                        <h4>Crypto Advisory Council</h4>
+                        <p>150+ execs focused on speculation; folded into the rescinded Adams initiatives.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                    <div class="program-card" onclick="openProgram(3)">
+                        <div class="pc-top"><span class="status-badge maintain">Collaborate</span><span class="pc-status active">Active · not city-run</span></div>
+                        <h4>NYC Blockchain Center</h4>
+                        <p>Chelsea hub via NYCEDC; a public-private nonprofit, not abolishable by City Hall.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                    <div class="program-card" onclick="openProgram(4)">
+                        <div class="pc-top"><span class="status-badge maintain">Maintain</span><span class="pc-status active">CUNY program</span></div>
+                        <h4>NYC Node Program</h4>
+                        <p>Ethereum node at CUNY; low-cost, public-institution workforce development.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                    <div class="program-card" onclick="openProgram(5)">
+                        <div class="pc-top"><span class="status-badge new">Repurpose</span><span class="pc-status unverified">Never shipped</span></div>
+                        <h4>MyCity Crypto Components</h4>
+                        <p>Repurpose any blockchain spend toward city payment rails &amp; community currency.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                    <div class="program-card" onclick="openProgram(6)">
+                        <div class="pc-top"><span class="status-badge reform">Refocus</span><span class="pc-status active">Private event</span></div>
+                        <h4>Blockchain Week NYC</h4>
+                        <p>Industry event, not a city program—reframe any city role toward community orgs.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                    <div class="program-card" onclick="openProgram(7)">
+                        <div class="pc-top"><span class="status-badge abolish">Cancel</span><span class="pc-status cancelled">Never implemented</span></div>
+                        <h4>Crypto Tax Payments</h4>
+                        <p>Aspirational under Adams; comparable programs saw near-zero adoption.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                    <div class="program-card" onclick="openProgram(8)">
+                        <div class="pc-top"><span class="status-badge new">Reimagine</span><span class="pc-status cancelled">Dead on arrival</span></div>
+                        <h4>BitBonds Proposal</h4>
+                        <p>Bitcoin-backed bonds rejected by the Comptroller; reimagine with stablecoins instead.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                    <div class="program-card" onclick="openProgram(9)">
+                        <div class="pc-top"><span class="status-badge pause">Pause</span><span class="pc-status cancelled">Superseded</span></div>
+                        <h4>NYC Blockchain Plan</h4>
+                        <p>Dec 2025 OTI framework tied to the Adams push; not expected to proceed.</p>
+                        <span class="pc-cta">View detail →</span>
+                    </div>
+                </div>
+
+                <div class="recommendation-box" style="margin-top: 22px; background: var(--accent-green-bg);">
+                    <h4>What's actually left to do</h4>
+                    <p style="font-size: 0.85rem;">With the Adams crypto programs already gone, Day-1 energy belongs on <strong>building</strong>, not abolishing: stand up the Part I proposals, <strong>maintain</strong> the CUNY Node Program, <strong>collaborate</strong> with the (non-city) Blockchain Center on community-focused work, and <strong>repurpose</strong> any surviving MyCity blockchain spend toward public payment rails. Keep a privacy audit and an alternatives-analysis requirement on the books so the next industry-capture push meets a higher bar.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 12: Final ==================== -->
         <div class="slide final-slide">
             <div class="slide-content">
                 <h2>Let's Build <span>Together</span></h2>
-                <p class="tagline">Technology should serve communities, not extract from them. The Mamdani administration has an opportunity to chart a different course—one that prioritizes residents over industry, democracy over capture, and genuine public benefit over promotional stunts.</p>
+                <p class="tagline">Technology should serve communities, not extract from them. New York City has an opportunity to chart a different course—one that prioritizes residents over industry, democracy over capture, and genuine public benefit over promotional stunts.</p>
                 <div class="cta-buttons">
                     <a href="https://decentralpark.nyc" class="cta-btn primary">Learn more about Decentral Park</a>
                     <button type="button" class="cta-btn secondary" onclick="copyAllComments()" style="cursor: pointer;">📋 Copy all comments</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- ==================== PROGRAM DETAIL MODALS ==================== -->
+    <div class="program-overlay" id="programOverlay" onclick="if(event.target===this)closeProgram()">
+
+        <!-- Program 1: Office of Digital Assets -->
+        <div class="program-detail" data-prog="1">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label amber">Program 1</span>
+            <h2 style="font-size: 1.8rem;">Office of Digital Assets &amp; Blockchain <span class="status-badge reform">Reduce Budget</span></h2>
+            <div class="recommendation-box" style="background: var(--accent-coral-bg); margin: 14px 0;">
+                <h4 style="color: var(--accent-coral);">2026 Update — Cancelled</h4>
+                <p style="font-size: 0.85rem;">Created Oct 14, 2025 via Executive Order 57; <strong>eliminated</strong> when Mayor Mamdani rescinded the post-indictment Adams orders in Jan 2026. The recommendation below is preserved for the record.</p>
+            </div>
+            <p class="lead" style="font-size: 1rem;">Originally an industry-liaison office. <strong>Primary recommendation: reduce the budget significantly</strong> and redirect resources toward community use cases rather than industry promotion. Est. budget: $736K - $1.79M annually.</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-coral); margin-bottom: 10px; font-size: 0.95rem;">Current Problems</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet coral"></span>Mission focused on <strong>industry promotion</strong> not residents</li>
+                        <li><span class="bullet coral"></span>Emphasis on "world's hub" and "attract talent"</li>
+                        <li><span class="bullet coral"></span>High-finance use cases prioritized</li>
+                    </ul>
+                    <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 14px; font-size: 0.95rem;">Suggested New Missions (if retained)</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span><strong>Community currencies</strong> for local economies</li>
+                        <li><span class="bullet"></span><strong>Mutual aid tools</strong> for neighborhood resilience</li>
+                        <li><span class="bullet"></span><strong>Cooperative infrastructure</strong> for worker ownership</li>
+                        <li><span class="bullet"></span><strong>Financial inclusion</strong> for unbanked residents</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="recommendation-box reform" style="margin-bottom: 12px;">
+                        <h4>Recommended Path</h4>
+                        <p style="font-size: 0.85rem;"><strong>Reduce budget significantly</strong> — cut industry promotion activities and redirect remaining resources toward community-focused initiatives. Amend EO 57 to shift from high-finance speculation to social utility.</p>
+                    </div>
+                    <div class="budget-box">
+                        <h4>Budget Methodology</h4>
+                        <p>Estimated from comparable NYC mayoral-office staffing: Executive Director ($180-220K), 2 Policy Analysts ($140-180K), Admin ($65-85K), plus 35% benefits and operating costs.</p>
+                        <span class="source-link">Sources: <a href="https://council.nyc.gov/budget/wp-content/uploads/sites/54/2024/05/OTI.pdf" target="_blank">OTI FY25 Budget</a>, <a href="https://www.nyc.gov/content/dam/nycgov/mayors-office/downloads/pdf/executive-orders/2025/eo-57.pdf" target="_blank">Executive Order 57</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program 2: Crypto Advisory Council -->
+        <div class="program-detail" data-prog="2">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label amber">Program 2</span>
+            <h2 style="font-size: 1.8rem;">NYC Crypto Advisory Council <span class="status-badge reform">Reform</span></h2>
+            <div class="recommendation-box" style="background: var(--accent-coral-bg); margin: 14px 0;">
+                <h4 style="color: var(--accent-coral);">2026 Update — Defunct</h4>
+                <p style="font-size: 0.85rem;">Announced May 2025 at the first NYC Crypto Summit; folded into the now-rescinded Adams crypto initiatives. No evidence it survives under the Mamdani administration.</p>
+            </div>
+            <p class="lead" style="font-size: 1rem;">Originally 150+ executives focused on speculation. Reform to balance expertise across crypto applications—not just finance, but public goods and community infrastructure. Est. budget: $90K - $340K annually.</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-coral); margin-bottom: 14px; font-size: 1rem;">Current Problems</h3>
+                    <ul class="bullet-list">
+                        <li><span class="bullet coral"></span><strong>Narrow expertise:</strong> Heavy on trading/finance, lacking governance, identity, infrastructure</li>
+                        <li><span class="bullet coral"></span><strong>Speculation focus:</strong> Investment over social utility</li>
+                        <li><span class="bullet coral"></span><strong>No transparency:</strong> No published membership or minutes</li>
+                    </ul>
+                    <h3 style="color: var(--accent-green); margin-bottom: 14px; margin-top: 16px; font-size: 1rem;">Reformed Expertise Mix</h3>
+                    <ul class="bullet-list">
+                        <li><span class="bullet"></span><strong>Public goods builders:</strong> Gitcoin, Protocol Labs, regenerative crypto experts</li>
+                        <li><span class="bullet"></span><strong>Governance researchers:</strong> deliberation, DAOs, participatory mechanisms</li>
+                        <li><span class="bullet"></span><strong>Infrastructure devs:</strong> Payment rails, identity systems, municipal applications</li>
+                        <li><span class="bullet"></span><strong>Industry (balanced):</strong> Retain some finance expertise, add social-impact focus</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="recommendation-box reform">
+                        <h4>Day 1 Action</h4>
+                        <p>Reform the council to broaden expertise beyond speculation—adding crypto experts working on public goods, governance mechanisms, and municipal infrastructure. Publish membership roster and meeting minutes.</p>
+                    </div>
+                    <div class="budget-box" style="margin-top: 12px;">
+                        <h4>Budget Methodology</h4>
+                        <p>Low direct cost (unpaid members) but requires staff support: Coordinator (0.5-1 FTE: $45-110K), event/meeting costs, communications/legal.</p>
+                        <span class="source-link">Source: <a href="https://www.coindesk.com/policy/2025/05/20/nyc-mayor-eric-adams-creating-crypto-advisory-council" target="_blank">CoinDesk: Advisory Council</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program 3: NYC Blockchain Center -->
+        <div class="program-detail" data-prog="3">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label green">Program 3</span>
+            <h2 style="font-size: 1.8rem;">NYC Blockchain Center <span class="status-badge maintain">Collaborate</span></h2>
+            <div class="recommendation-box" style="background: var(--accent-green-bg); margin: 14px 0;">
+                <h4>2026 Status — Active (not a city office)</h4>
+                <p style="font-size: 0.85rem;">A public-private venture (NYCEDC + Global Blockchain Business Council + Future Perfect Ventures), launched 2019. Not directly abolishable by mayoral order—engage it as a collaboration partner.</p>
+            </div>
+            <p class="lead" style="font-size: 1rem;">Chelsea-based innovation hub via NYCEDC. A valuable resource for blockchain expertise and policy collaboration. Est. budget: $320K - $885K annually.</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">What It Does Well</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span>Hosts blockchain startups and events</li>
+                        <li><span class="bullet"></span>Provides workspace and networking</li>
+                        <li><span class="bullet"></span>Concentrates blockchain expertise in NYC</li>
+                        <li><span class="bullet"></span>Potential partner for progressive policy development</li>
+                    </ul>
+                    <h3 style="color: var(--accent-amber); margin-bottom: 10px; margin-top: 16px; font-size: 0.95rem;">Note</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet amber"></span><strong>VC fund involvement</strong> — worth monitoring for potential conflicts</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="recommendation-box maintain">
+                        <h4>Recommendation</h4>
+                        <p style="font-size: 0.85rem;">Engage as a <strong>policy collaboration partner</strong>. Suggest the Center balance industry-focused activities with community work: financial infrastructure for local organizations, tools for unbanked New Yorkers, and partnerships with community land trusts and mutual aid networks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program 4: NYC Node Program -->
+        <div class="program-detail" data-prog="4">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label">Program 4</span>
+            <h2 style="font-size: 1.8rem;">NYC Node Program <span class="status-badge maintain">Maintain</span></h2>
+            <p class="lead" style="font-size: 1rem;">Ethereum node at CUNY Queens College with educational curriculum. The best of existing crypto initiatives—low cost, public institution, actual workforce development. Est. budget: $74K - $232K annually.</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">What It Does</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span>Runs an Ethereum validator node at CUNY</li>
+                        <li><span class="bullet"></span>Provides hands-on blockchain education</li>
+                        <li><span class="bullet"></span>Trains students in distributed systems</li>
+                        <li><span class="bullet"></span>Public institution (not private operators)</li>
+                    </ul>
+                    <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 16px; font-size: 0.95rem;">Why It Works</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span><strong>Low cost</strong> — minimal ongoing expenses</li>
+                        <li><span class="bullet"></span><strong>Educational value</strong> — practical skills training</li>
+                        <li><span class="bullet"></span><strong>Public benefit</strong> — CUNY serves working-class students</li>
+                        <li><span class="bullet"></span><strong>No industry capture</strong> — no private operators</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="recommendation-box">
+                        <h4>Recommendation</h4>
+                        <p style="font-size: 0.85rem;"><strong>Maintain the program</strong> but review curriculum for industry bias. Add required modules on practical crypto literacy: saving on remittances, self-custody for the unbanked, and scam/fraud recognition.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program 5: MyCity Crypto Components -->
+        <div class="program-detail" data-prog="5">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label">Program 5</span>
+            <h2 style="font-size: 1.8rem;">MyCity Crypto Components <span class="status-badge new">Repurpose</span></h2>
+            <div class="recommendation-box" style="background: var(--accent-blue-bg); margin: 14px 0; border-left: 3px solid var(--accent-blue);">
+                <h4 style="color: var(--accent-blue);">2026 Status — Unverified</h4>
+                <p style="font-size: 0.85rem;">A crypto "Digital Wallet" tie-in was floated in 2022-23 but appears never to have shipped. MyCity exists as a benefits/services portal; treat this as a <strong>repurpose-the-budget</strong> opportunity if any blockchain spend remains.</p>
+            </div>
+            <p class="lead" style="font-size: 1rem;">Repurpose any blockchain infrastructure for a citywide payment system and NYC community currency. Est. budget: $9.25M - $34.7M (reallocated from existing MyCity blockchain spend).</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Repurposed Use Cases</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span><strong>City Payment Rails:</strong> Compete with Visa/Mastercard, reduce merchant fees</li>
+                        <li><span class="bullet"></span><strong>NYC Community Currency:</strong> Keep money circulating locally</li>
+                        <li><span class="bullet"></span><strong>EBT Integration:</strong> Benefits access without surveillance</li>
+                        <li><span class="bullet"></span><strong>Mutual Aid Tools:</strong> Community-to-community transfers</li>
+                    </ul>
+                    <h3 style="color: var(--accent-coral); margin-bottom: 10px; margin-top: 14px; font-size: 0.95rem;">Must Address</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet coral"></span><strong>Cancel food tracking</strong> — no purchase surveillance</li>
+                        <li><span class="bullet coral"></span><strong>Privacy by design</strong> — no law-enforcement data sharing</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="recommendation-box">
+                        <h4>New Vision</h4>
+                        <p style="font-size: 0.85rem;"><strong>Transform the MyCity wallet</strong> into public payment infrastructure that serves residents—saving merchants 2-3% in fees, funding community programs, and providing financial access to unbanked New Yorkers.</p>
+                    </div>
+                    <div class="budget-box" style="margin-top: 12px;">
+                        <h4>Budget Methodology</h4>
+                        <p>Total MyCity spend documented at ~$100M over 2.5 years. Blockchain allocation can be redirected to city payment rails, community-currency infrastructure, and a privacy-preserving wallet.</p>
+                        <span class="source-link">Source: <a href="https://nysfocus.com/2025/03/19/mycity-eric-adams-child-care" target="_blank">NY Focus Investigation</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program 6: Blockchain Week NYC -->
+        <div class="program-detail" data-prog="6">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label amber">Program 6</span>
+            <h2 style="font-size: 1.8rem;">Blockchain Week NYC <span class="status-badge reform">Refocus</span></h2>
+            <div class="recommendation-box" style="background: var(--accent-blue-bg); margin: 14px 0; border-left: 3px solid var(--accent-blue);">
+                <h4 style="color: var(--accent-blue);">2026 Status — Private event</h4>
+                <p style="font-size: 0.85rem;">"New York Blockchain Week" and ETHGlobal NYC are private/industry events, not NYC-government initiatives. There is nothing for the city to abolish—but any city sponsorship or role should be refocused.</p>
+            </div>
+            <p class="lead" style="font-size: 1rem;">Repurpose any city role from industry showcase to a bridge between crypto experts and NYC community organizers, small businesses, and local organizations. Est. budget: $185K - $555K annually.</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-coral); margin-bottom: 10px; font-size: 0.95rem;">Current Problems</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet coral"></span>Funding flows to for-profit organizers</li>
+                        <li><span class="bullet coral"></span>Industry-only focus, no community benefit</li>
+                        <li><span class="bullet coral"></span>No connection to actual NYC residents or businesses</li>
+                    </ul>
+                    <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 16px; font-size: 0.95rem;">Refocused Mission</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span><strong>Connect crypto experts</strong> with community organizers</li>
+                        <li><span class="bullet"></span><strong>Invite local business owners</strong> who need financial infrastructure</li>
+                        <li><span class="bullet"></span><strong>Cooperative crypto tools</strong> for worker ownership</li>
+                        <li><span class="bullet"></span><strong>Accessible programming</strong> for non-industry New Yorkers</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="recommendation-box reform">
+                        <h4>New Model</h4>
+                        <p style="font-size: 0.85rem;"><strong>Community-Expert Bridge:</strong> a venue where cryptographic experts meet NYC community organizers, small businesses, and local orgs who could genuinely benefit from crypto financial rails—not just an industry conference.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program 7: Crypto Tax Payments -->
+        <div class="program-detail" data-prog="7">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label coral">Program 7</span>
+            <h2 style="font-size: 1.8rem;">Crypto Tax Payments <span class="status-badge abolish">Cancel</span></h2>
+            <div class="recommendation-box" style="background: var(--accent-coral-bg); margin: 14px 0;">
+                <h4 style="color: var(--accent-coral);">2026 Update — Moot</h4>
+                <p style="font-size: 0.85rem;">Floated by Adams but <strong>never implemented</strong> (it lacked legal authority), and not pursued by the Mamdani administration. The recommendation to cancel is effectively already the reality.</p>
+            </div>
+            <p class="lead" style="font-size: 1rem;">Similar programs elsewhere saw negligible adoption—Colorado received only 78 payments (~$57,000) over 3 years; Utah received zero since its 2023 launch.</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-coral); margin-bottom: 14px; font-size: 1rem;">Why These Programs Fail</h3>
+                    <ul class="bullet-list">
+                        <li><span class="bullet coral"></span><strong>Capital gains tax:</strong> Spending crypto triggers a taxable event</li>
+                        <li><span class="bullet coral"></span><strong>Economic disincentive:</strong> Exchange fees higher than free ACH</li>
+                        <li><span class="bullet coral"></span><strong>Holder mentality:</strong> People treat crypto as investment, not payment</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-coral); margin-bottom: 14px; font-size: 1rem;">Documented Failures</h3>
+                    <ul class="bullet-list">
+                        <li><span class="bullet coral"></span><strong>Colorado:</strong> 78 payments, $57K in 3 years</li>
+                        <li><span class="bullet coral"></span><strong>Utah:</strong> Zero payments since Jan 2023</li>
+                        <li><span class="bullet coral"></span><strong>Ohio:</strong> Program suspended 2019</li>
+                        <li><span class="bullet coral"></span><strong>Cost vs benefit:</strong> $850K-$2.5M to implement for negligible use</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="recommendation-box abolish" style="margin-top: 18px;">
+                <h4>Recommendation: Cancel</h4>
+                <p style="font-size: 0.9rem;">Do not implement. Every comparable program has seen negligible adoption. Focus city resources on programs with proven demand instead of chasing crypto headlines.</p>
+            </div>
+        </div>
+
+        <!-- Program 8: BitBonds / Municipal Bonds -->
+        <div class="program-detail" data-prog="8">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label purple">Program 8</span>
+            <h2 style="font-size: 1.8rem;">Municipal Bonds Program <span class="status-badge new">Reimagine</span></h2>
+            <div class="recommendation-box" style="background: var(--accent-coral-bg); margin: 14px 0;">
+                <h4 style="color: var(--accent-coral);">2026 Update — BitBonds dead on arrival</h4>
+                <p style="font-size: 0.85rem;">Adams' Bitcoin-backed "BitBonds" (May 2025) were publicly rejected by then-Comptroller Brad Lander as fiscally and legally unworkable, and never issued. The <strong>stablecoin</strong> reimagining below is the salvageable idea. Source: <a href="https://comptroller.nyc.gov/newsroom/comptroller-brad-lander-pours-cold-water-on-mayor-adams-bitbonds-proposal/" target="_blank" style="color: var(--accent-coral);">Comptroller</a>.</p>
+            </div>
+            <p class="lead" style="font-size: 1rem;">Re-evaluate with stablecoins (not volatile Bitcoin). The $4.2T muni-bond market is ripe for disruption—issuance costs 2-5% and only 18% uses electronic trading. Enable lower-income residents to buy yield-bearing municipal bonds.</p>
+            <div class="stats-row" style="margin-bottom: 18px;">
+                <div class="stat"><div class="stat-value">$4.2T</div><div class="stat-label">Municipal bond market size</div></div>
+                <div class="stat"><div class="stat-value">66%</div><div class="stat-label">Held by households (retail)</div></div>
+                <div class="stat"><div class="stat-value">2-5%</div><div class="stat-label">Current issuance costs</div></div>
+            </div>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-green); margin-bottom: 10px; font-size: 0.95rem;">Stablecoin Solution</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span><strong>USDC/USDT:</strong> No volatility, pegged 1:1 to the dollar</li>
+                        <li><span class="bullet"></span><strong>24/7 settlement</strong> — faster than traditional bonds</li>
+                        <li><span class="bullet"></span><strong>Lower minimums</strong> — accessible to the working class</li>
+                    </ul>
+                    <h3 style="color: var(--accent-blue); margin-bottom: 10px; margin-top: 14px; font-size: 0.95rem;">Already Happening</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span><strong><a href="https://www.bondbuyer.com/news/quincy-massachusetts-issues-first-ever-blockchain-bond-deal-in-u-s" target="_blank" style="color: var(--accent-blue);">Quincy, MA (2024)</a>:</strong> First U.S. blockchain municipal bond — $10M via JP Morgan's Onyx</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="recommendation-box" style="background: var(--accent-purple-bg);">
+                        <h4 style="color: var(--accent-purple);">Community Wealth Model</h4>
+                        <p style="font-size: 0.85rem;"><strong>Enable lower-income New Yorkers</strong> to invest in city bonds with as little as $25. Yield goes to investors AND funds rent-relief—building community stake in the city's fiscal health.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program 9: NYC Blockchain Plan -->
+        <div class="program-detail" data-prog="9">
+            <button class="modal-close" onclick="closeProgram()" aria-label="Close">✕</button>
+            <span class="section-label coral">Program 9</span>
+            <h2 style="font-size: 1.8rem;">NYC Blockchain Plan <span class="status-badge pause">Pause</span></h2>
+            <div class="recommendation-box" style="background: var(--accent-coral-bg); margin: 14px 0;">
+                <h4 style="color: var(--accent-coral);">2026 Update — Superseded</h4>
+                <p style="font-size: 0.85rem;">A 61-page OTI plan published Dec 2025, tied to the Adams final-term blockchain push; not expected to proceed under the Mamdani administration. Source: <a href="https://statescoop.com/nyc-eric-adams-blockchain-plan/" target="_blank" style="color: var(--accent-coral);">StateScoop</a>.</p>
+            </div>
+            <p class="lead" style="font-size: 1rem;">We are not convinced this is a good use case for crypto. Asbestos certs, vital records, and property deeds can all be made publicly verifiable without blockchain.</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="color: var(--accent-coral); margin-bottom: 10px; font-size: 0.95rem;">Core Skepticism</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet coral"></span><strong>Asbestos Certs</strong> — conventional databases can do this</li>
+                        <li><span class="bullet coral"></span><strong>Vital Records</strong> — non-blockchain public verification exists</li>
+                        <li><span class="bullet coral"></span><strong>Property Deeds</strong> — existing systems with digital signatures work</li>
+                        <li><span class="bullet coral"></span><strong>City Payments</strong> — low demand, unnecessary complexity</li>
+                    </ul>
+                    <h3 style="color: var(--accent-green); margin-bottom: 10px; margin-top: 12px; font-size: 0.95rem;">Salvageable Elements</h3>
+                    <ul class="bullet-list" style="font-size: 0.85rem;">
+                        <li><span class="bullet"></span>Establishing evaluation criteria is a good direction</li>
+                        <li><span class="bullet"></span>Could work IF community input is added and reframed NYC-first</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="recommendation-box pause">
+                        <h4>Recommendation: Freeze</h4>
+                        <p style="font-size: 0.85rem;"><strong>Pause all pilots.</strong> These use cases do not clearly require blockchain—publicly verifiable data can be achieved with conventional cryptographic methods. If continued, require community input, NYC-focused framing, and a rigorous alternatives analysis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Navigation -->
@@ -2033,6 +1956,11 @@
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
+            // While a program modal is open, Escape closes it and nav is suspended
+            if (programOverlay && programOverlay.classList.contains('open')) {
+                if (e.key === 'Escape') closeProgram();
+                return;
+            }
             // Don't navigate while typing in a comment box
             if (e.target && (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT')) {
                 return;
@@ -2150,6 +2078,24 @@
             } else {
                 onFail();
             }
+        }
+
+        // ==================== Program detail modals ====================
+        const programOverlay = document.getElementById('programOverlay');
+
+        function openProgram(n) {
+            document.querySelectorAll('.program-detail').forEach((d) => {
+                d.classList.toggle('active', d.dataset.prog === String(n));
+            });
+            if (programOverlay) {
+                programOverlay.classList.add('open');
+                programOverlay.scrollTop = 0;
+            }
+        }
+
+        function closeProgram() {
+            if (programOverlay) programOverlay.classList.remove('open');
+            document.querySelectorAll('.program-detail').forEach((d) => d.classList.remove('active'));
         }
     </script>
 </body>
